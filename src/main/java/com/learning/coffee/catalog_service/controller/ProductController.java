@@ -2,6 +2,7 @@ package com.learning.coffee.catalog_service.controller;
 
 import com.learning.coffee.catalog_service.dto.ProductCreateRequest;
 import com.learning.coffee.catalog_service.dto.ProductDto;
+import com.learning.coffee.catalog_service.dto.ProductResponse;
 import com.learning.coffee.catalog_service.dto.ProductUpdateRequest;
 import com.learning.coffee.catalog_service.service.ProductService;
 import jakarta.validation.Valid;
@@ -27,6 +28,12 @@ public class ProductController {
     public ProductDto getProduct(@PathVariable UUID id) {
         return productService.getProduct(id);
     }
+
+    @GetMapping("/get-product/{id}")
+    public ProductResponse getProductInfoForOrder(@PathVariable UUID id) {
+        return productService.getProductInfoForOrder(id);
+    }
+
 
     @PostMapping
     public ProductDto saveProduct(@Valid @RequestBody ProductCreateRequest productCreateRequest) {

@@ -2,6 +2,7 @@ package com.learning.coffee.catalog_service.service;
 
 import com.learning.coffee.catalog_service.dto.ProductCreateRequest;
 import com.learning.coffee.catalog_service.dto.ProductDto;
+import com.learning.coffee.catalog_service.dto.ProductResponse;
 import com.learning.coffee.catalog_service.dto.ProductUpdateRequest;
 import com.learning.coffee.catalog_service.entity.Product;
 import com.learning.coffee.catalog_service.mapper.ProductMapper;
@@ -67,5 +68,17 @@ public class ProductService {
             product.setIngredients(productUpdateRequest.getIngredients());
         }
         return productMapper.toProductDto(product);
+    }
+
+    public ProductResponse getProductInfoForOrder(UUID id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.error("Product with ID {} not found", id);
+                    return new EntityNotFoundException("Product not found");
+                        });
+        if (!product.getAvailable()) {
+            throw new RuntimeException("Product is not available now");
+        }
+        return productMapper.toProductResponse(product);
     }
 }
