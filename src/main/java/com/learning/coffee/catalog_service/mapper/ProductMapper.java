@@ -5,6 +5,7 @@ import com.learning.coffee.catalog_service.dto.ProductDto;
 import com.learning.coffee.catalog_service.dto.ProductResponse;
 import com.learning.coffee.catalog_service.entity.Product;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface ProductMapper {
 
     Product toProduct(ProductCreateRequest productCreateRequest);
 
+    @Mapping(source = "name", target = "productName")
+    @Mapping(source = "price", target = "unitPrice")
     ProductResponse toProductResponse(Product product);
 }
